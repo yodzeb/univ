@@ -1,0 +1,63 @@
+<html><body>
+<p>
+<h1>Ennonc&eacute;</h1>
+<h2>Exercice 1: Exploitation d'une injection SQL</h2>
+Sur la page <a href='http://10.0.0.5/bacula-web/joblogs.php'>suivante</a>, exploitez le CVE-2014-8295 afin d'obtenir:
+<ul>
+<li>Le mot de passe root de MySL</li>
+<li>Ecrire d'un fichier sur le disque '/tmp/<i>VotreNom</i>'</li>
+<li>Lecture d'un fichier sur le disque '/etc/passwd', ou '/tmp/<i>VotreNom</i>'</li>
+<li>Ressources:</li>
+<ul>
+  <li><a href="https://dev.mysql.com/doc/refman/5.0/en/select-into.html">MySQL SELECT..INTO</a></li>
+  <li>Bacula <a href="bacula-web.5.2.10.tar.gz">source code</a></li>
+</ul>
+</ul>
+</p>
+
+<h2>Exercice 2: Exploitation de Heartbleed</h2>
+<ul>
+  <li>Utilisez l'exploit  pour voler les logins</li>
+  <li>D&eacute;codez les logins</li>
+  <li>Accedez a la ressource</li>
+  <li>Ressources:</li>
+  <ul>
+    <li>The HB exploit: <a href="/tools/hb-test.py">HBTest.py</a></li>
+  </ul>
+</ul>
+
+<h2>Exercice 3: ShellShock</h2>
+<ul>
+<li>Sur cette page (<a href='/cgi-bin/index.php'>Shellshock</a>), exploitez la faille shellshock et obtenez un shell</li>
+</ul>
+</p>
+
+<p>
+<h2>Exercice 4: Priviledge escalation</h2>
+<ul>
+  <li>Une fois un shell www-data obtenu sur la machine, passez root</li>
+  <li>Differentes options:</li>
+  <ul>
+    <li>Schedulers</li>
+    <li>Kernel exploit</li>
+    <li>Exploit on other softwares</li>
+  </ul>
+</ul>
+</p>
+<p>
+<h2>Exercice 5: Metasploit</h2>
+<ul>
+<li>Machine d&eacute;di&eacute;e '<i>Metasploitable</i>', disponible sur 10.0.0.6</li>
+<li>Utilisez MSF pour p&eacute;n&eacute;trer la machine</li>
+</ul>
+</p>
+
+<p>
+<h2>Exercice 6: DNS Amplification</h2>
+<ul>
+  <li>Un public DNS resolver est disponible sur 10.0.0.5:53 </li>
+
+</ul>
+</p>
+</body>
+</html>

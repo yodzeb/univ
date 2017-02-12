@@ -1,21 +1,9 @@
 <html><body>
 <p>
-<h1>Ennonc&eacute;</h1>
-<h2>Exercice 1: Exploitation d'une injection SQL</h2>
-Sur la page <a href='http://10.0.0.5/bacula-web/joblogs.php'>suivante</a>, exploitez le CVE-2014-8295 afin d'obtenir:
-<ul>
-<li>Le mot de passe root de MySL</li>
-<li>Ecrire d'un fichier sur le disque '/tmp/<i>VotreNom</i>'</li>
-<li>Lecture d'un fichier sur le disque '/etc/passwd', ou '/tmp/<i>VotreNom</i>'</li>
-<li>Ressources:</li>
-<ul>
-  <li><a href="https://dev.mysql.com/doc/refman/5.0/en/select-into.html">MySQL SELECT..INTO</a></li>
-  <li>Bacula <a href="/ressources/bacula-web.5.2.10.tar.gz">source code</a></li>
-</ul>
-</ul>
-</p>
 
-<h2>Exercice 2: Exploitation de Heartbleed</h2>
+<h1>Ennonc&eacute;</h1>
+
+<h2>Exercice 1: Exploitation de Heartbleed</h2>
 <ul>
   <li>Utilisez l'exploit  pour voler les logins</li>
   <li>D&eacute;codez les logins</li>
@@ -25,6 +13,23 @@ Sur la page <a href='http://10.0.0.5/bacula-web/joblogs.php'>suivante</a>, explo
     <li>The HB exploit: <a href="/tools/hb-test.py">HBTest.py</a></li>
   </ul>
 </ul>
+
+<h2>Exercice 2: Exploitation d'une injection SQL</h2>
+Sur la page <a href='http://10.0.0.5/bacula-web/joblogs.php'>suivante</a>, exploitez le CVE-2014-8295 afin :
+<ul>
+<li>De d&eacute;terminer le nombre de colonnes de la requete</li>
+<li>De sortir le mot de passe root de MySL</li>
+<li>Ecrire d'un fichier sur le disque '/tmp/<i>VotreNom</i>'</li>
+<li>Lecture d'un fichier sur le disque '/etc/passwd', ou '/tmp/<i>VotreNom</i>'</li>
+<li>Ressources:</li>
+<ul>
+  <li><a href="https://dev.mysql.com/doc/refman/5.0/en/select-into.html">MySQL SELECT..INTO</a></li>
+  <li>Bacula <a href="/ressources/bacula-web.5.2.10.tar.gz">source code</a></li>
+</ul>
+<li>Bonus: utiliser cette seconde faille pour un acces shell au serveur: <a href="/cgi-bin/lfi.php">LFI</a></li>
+</ul>
+
+</p>
 
 <h2>Exercice 3: ShellShock</h2>
 <ul>
@@ -38,26 +43,31 @@ Sur la page <a href='http://10.0.0.5/bacula-web/joblogs.php'>suivante</a>, explo
   <li>Une fois un shell www-data obtenu sur la machine, passez root</li>
   <li>Differentes options:</li>
   <ul>
-    <li>Schedulers</li>
-    <li>Kernel exploit</li>
-    <li>Exploit on other softwares</li>
+    <li>Schedulers (cron)</li>
+    <li>Kernel exploit (uname)</li>
+    <li>Exploit on other softwares (/home/ubuntu/local_bin_exploitable/)</li>
   </ul>
 </ul>
 </p>
+
 <p>
-<h2>Exercice 5: Metasploit</h2>
+<h2>Exercice 5: DNS Amplification</h2>
+<ul>
+  <li>Un public DNS resolver est disponible sur 10.0.0.5:53 </li>
+  <li>Essayez une amplification DNS sur le record "ANY isc.org"</li>
+  <li>Spoofer votre IP source pour cibler votre voisin. Verifiez le résultats obtenus en capturant sur son poste
+    (<a href="http://www.secdev.org/projects/scapy/">Scappy</a>)</li>
+  <li>Améliorez la technique pour augmenter le nombre de paquet (tcpreplay)</li>
+</ul>
+</p>
+
+<p>
+<h2>Exercice 6: Metasploit</h2>
 <ul>
 <li>Machine d&eacute;di&eacute;e '<i>Metasploitable</i>', disponible sur 10.0.0.6</li>
 <li>Utilisez MSF pour p&eacute;n&eacute;trer la machine</li>
 </ul>
 </p>
 
-<p>
-<h2>Exercice 6: DNS Amplification</h2>
-<ul>
-  <li>Un public DNS resolver est disponible sur 10.0.0.5:53 </li>
-
-</ul>
-</p>
 </body>
 </html>

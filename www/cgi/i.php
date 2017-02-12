@@ -1,6 +1,7 @@
 #!/usr/bin/php
-
 <?
+
+header("Content-Type: text/html");
 
 $lang = $_GET["User-Agent"];
 
